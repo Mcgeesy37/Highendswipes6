@@ -234,6 +234,28 @@ transform-style:preserve-3d;
 
 }
 
+.hero::before{
+
+content:"";
+
+position:absolute;
+
+right:-200px;
+top:50%;
+
+width:800px;
+height:800px;
+
+background:radial-gradient(circle,rgba(198,167,106,0.25),transparent 60%);
+
+filter:blur(150px);
+
+transform:translateY(-50%);
+
+pointer-events:none;
+
+}
+
 .hero h1{
 
 font-size:76px;
