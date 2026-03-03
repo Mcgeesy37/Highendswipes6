@@ -49,12 +49,12 @@ scene.add(globe)
 
 
 /* ======================
-NETWORK POINTS
+NETWORK NODES
 ====================== */
 
 const nodes = []
 
-const nodeGeometry = new THREE.SphereGeometry(0.03,8,8)
+const nodeGeometry = new THREE.SphereGeometry(0.06,12,12)
 
 const nodeMaterial = new THREE.MeshBasicMaterial({
 color:0xc6a76a
@@ -88,7 +88,7 @@ NETWORK CONNECTIONS
 const lineMaterial = new THREE.LineBasicMaterial({
 color:0xc6a76a,
 transparent:true,
-opacity:0.25
+opacity:0.45
 })
 
 for(let i=0;i<nodes.length;i++){
@@ -115,6 +115,41 @@ scene.add(line)
 }
 
 }
+
+
+
+/* ======================
+DATA FLOW PARTICLES
+====================== */
+
+const flowGeometry = new THREE.BufferGeometry()
+
+const flowMaterial = new THREE.PointsMaterial({
+color:0xffffff,
+size:0.015
+})
+
+const flowPositions = new Float32Array(300*3)
+
+for(let i=0;i<300;i++){
+
+flowPositions[i*3]=(Math.random()-0.5)*8
+flowPositions[i*3+1]=(Math.random()-0.5)*8
+flowPositions[i*3+2]=(Math.random()-0.5)*8
+
+}
+
+flowGeometry.setAttribute(
+"position",
+new THREE.BufferAttribute(flowPositions,3)
+)
+
+const flows = new THREE.Points(
+flowGeometry,
+flowMaterial
+)
+
+scene.add(flows)
 
 
 
@@ -162,12 +197,12 @@ function animate(){
 
 requestAnimationFrame(animate)
 
-globe.rotation.y += 0.0015
+globe.rotation.y += 0.002
+globe.rotation.x += 0.0002
+
 glow.rotation.y += 0.001
 
-nodes.forEach(node=>{
-node.rotation.y += 0.002
-})
+flows.rotation.y += 0.0005
 
 scene.rotation.y = mouseX * 0.4
 scene.rotation.x = mouseY * 0.2
