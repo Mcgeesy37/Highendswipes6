@@ -8,7 +8,8 @@ window.innerWidth/window.innerHeight,
 )
 
 const renderer = new THREE.WebGLRenderer({
-alpha:true
+alpha:true,
+antialias:true
 })
 
 renderer.setSize(
@@ -19,76 +20,178 @@ window.innerHeight
 document.getElementById("globe")
 .appendChild(renderer.domElement)
 
-camera.position.z = 10
+camera.position.z = 14
 
 
-/* GLOBE */
 
-const geometry = new THREE.SphereGeometry(5,64,64)
+/* ======================
+GLOBE
+====================== */
 
-const material = new THREE.MeshBasicMaterial({
+const globeGeometry = new THREE.SphereGeometry(4,64,64)
+
+const globeMaterial = new THREE.MeshBasicMaterial({
 
 color:0xc6a76a,
 wireframe:true,
 transparent:true,
-opacity:0.25
+opacity:0.15
 
 })
 
 const globe = new THREE.Mesh(
-geometry,
-material
+globeGeometry,
+globeMaterial
 )
 
 scene.add(globe)
 
 
-/* NETWORK POINTS */
 
-const pointsGeometry = new THREE.BufferGeometry()
+/* ======================
+NETWORK POINTS
+====================== */
 
-const pointsCount = 400
+const nodes = []
 
-const positions = new Float32Array(pointsCount*3)
+const nodeGeometry = new THREE.SphereGeometry(0.03,8,8)
 
-for(let i=0;i<pointsCount;i++){
+const nodeMaterial = new THREE.MeshBasicMaterial({
+color:0xc6a76a
+})
 
-positions[i*3] = (Math.random()-0.5)*12
-positions[i*3+1] = (Math.random()-0.5)*12
-positions[i*3+2] = (Math.random()-0.5)*12
+for(let i=0;i<80;i++){
+
+const node = new THREE.Mesh(nodeGeometry,nodeMaterial)
+
+const phi = Math.acos((Math.random()*2)-1)
+const theta = Math.random()*Math.PI*2
+
+const r = 4
+
+node.position.x = r*Math.sin(phi)*Math.cos(theta)
+node.position.y = r*Math.sin(phi)*Math.sin(theta)
+node.position.z = r*Math.cos(phi)
+
+nodes.push(node)
+
+scene.add(node)
 
 }
 
-pointsGeometry.setAttribute(
-"position",
-new THREE.BufferAttribute(positions,3)
-)
 
-const pointsMaterial = new THREE.PointsMaterial({
+
+/* ======================
+NETWORK CONNECTIONS
+====================== */
+
+const lineMaterial = new THREE.LineBasicMaterial({
+color:0xc6a76a,
+transparent:true,
+opacity:0.25
+})
+
+for(let i=0;i<nodes.length;i++){
+
+for(let j=i+1;j<nodes.length;j++){
+
+const dist = nodes[i].position.distanceTo(nodes[j].position)
+
+if(dist < 2){
+
+const points = []
+
+points.push(nodes[i].position)
+points.push(nodes[j].position)
+
+const geometry = new THREE.BufferGeometry().setFromPoints(points)
+
+const line = new THREE.Line(geometry,lineMaterial)
+
+scene.add(line)
+
+}
+
+}
+
+}
+
+
+
+/* ======================
+AMBIENT GLOW
+====================== */
+
+const glowGeometry = new THREE.SphereGeometry(4.6,32,32)
+
+const glowMaterial = new THREE.MeshBasicMaterial({
 
 color:0xc6a76a,
-size:0.03
+transparent:true,
+opacity:0.05
 
 })
 
-const points = new THREE.Points(
-pointsGeometry,
-pointsMaterial
-)
+const glow = new THREE.Mesh(glowGeometry,glowMaterial)
 
-scene.add(points)
+scene.add(glow)
 
+
+
+/* ======================
+MOUSE PARALLAX
+====================== */
+
+let mouseX = 0
+let mouseY = 0
+
+document.addEventListener("mousemove",(e)=>{
+
+mouseX = (e.clientX/window.innerWidth)-0.5
+mouseY = (e.clientY/window.innerHeight)-0.5
+
+})
+
+
+
+/* ======================
+ANIMATION
+====================== */
 
 function animate(){
 
 requestAnimationFrame(animate)
 
 globe.rotation.y += 0.0015
+glow.rotation.y += 0.001
 
-points.rotation.y += 0.0008
+nodes.forEach(node=>{
+node.rotation.y += 0.002
+})
+
+scene.rotation.y = mouseX * 0.4
+scene.rotation.x = mouseY * 0.2
 
 renderer.render(scene,camera)
 
 }
 
 animate()
+
+
+
+/* ======================
+RESIZE
+====================== */
+
+window.addEventListener("resize",()=>{
+
+camera.aspect = window.innerWidth/window.innerHeight
+camera.updateProjectionMatrix()
+
+renderer.setSize(
+window.innerWidth,
+window.innerHeight
+)
+
+})
