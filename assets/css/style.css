@@ -306,6 +306,24 @@ transition:0.3s;
 
 }
 
+.gold-btn{
+
+background:#c6a76a;
+
+box-shadow:
+0 0 20px rgba(198,167,106,0.25);
+
+}
+
+.gold-btn:hover{
+
+transform:translateY(-4px) scale(1.03);
+
+box-shadow:
+0 0 40px rgba(198,167,106,0.6);
+
+}
+
 .gold-btn:hover{
 
 transform:translateY(-4px);
