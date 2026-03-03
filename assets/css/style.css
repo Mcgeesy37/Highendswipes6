@@ -428,22 +428,46 @@ opacity:0.8;
 /* ===============================
 CURSOR
 =============================== */
-
 .cursor{
 
 position:fixed;
 
-width:40px;
-height:40px;
+width:32px;
+height:32px;
 
 border-radius:50%;
 
-pointer-events:none;
+border:1px solid rgba(198,167,106,0.6);
 
-background:radial-gradient(circle,rgba(198,167,106,0.4),transparent 60%);
+pointer-events:none;
 
 transform:translate(-50%,-50%);
 
+transition:
+width 0.2s,
+height 0.2s,
+border 0.2s;
+
 z-index:999;
+
+}
+
+.cursor::after{
+
+content:"";
+
+position:absolute;
+
+width:6px;
+height:6px;
+
+background:#c6a76a;
+
+border-radius:50%;
+
+top:50%;
+left:50%;
+
+transform:translate(-50%,-50%);
 
 }
