@@ -10,17 +10,29 @@
 
 <link rel="stylesheet" href="assets/css/style.css">
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+
 </head>
 
 <body>
 
 <div class="marble"></div>
+<div id="globe"></div>
 <div class="particles"></div>
 
 <header>
 
 <div class="logo">
-CoreSetup Studio
+
+<div class="logo-dot"></div>
+
+<div>
+
+CoreSetup Studio<br>
+<span>Websites • Infrastructure • Stability</span>
+
+</div>
+
 </div>
 
 <nav>
@@ -28,7 +40,8 @@ CoreSetup Studio
 <a href="#services">Leistungen</a>
 <a href="#projects">Projekte</a>
 <a href="#process">Ablauf</a>
-<a href="#contact" class="btn">Kontakt</a>
+
+<a class="contact-btn">Kontakt</a>
 
 </nav>
 
@@ -36,6 +49,10 @@ CoreSetup Studio
 
 
 <section class="hero">
+
+<div class="hero-left">
+
+<span class="label">LUXURY DIGITAL SETUP</span>
 
 <h1>
 
@@ -46,12 +63,28 @@ die wirken wie Autorität.
 
 <p>
 
-High-End Websites, Infrastruktur und Stabilisierung
+High-End Websites, Infrastruktur und Stabilisierung  
 für Unternehmen mit Anspruch.
 
 </p>
 
-<a class="cta">Projekt starten</a>
+<div class="buttons">
+
+<button class="gold-btn">Projekt starten</button>
+
+<button class="ghost-btn">Referenzen</button>
+
+</div>
+
+<div class="features">
+
+<div class="feature">Executive Look</div>
+<div class="feature">Performance</div>
+<div class="feature">Stability</div>
+
+</div>
+
+</div>
 
 </section>
 
@@ -65,21 +98,24 @@ für Unternehmen mit Anspruch.
 <div class="card">
 
 <h3>Websites</h3>
+
 <p>High-End Webdesign mit klarer Struktur.</p>
 
 </div>
 
 <div class="card">
 
-<h3>Infrastruktur</h3>
-<p>Server Setup, Hosting & Optimierung.</p>
+<h3>Infrastructure</h3>
+
+<p>Server Setup, Hosting & Stabilität.</p>
 
 </div>
 
 <div class="card">
 
-<h3>Stabilität</h3>
-<p>Performance & Sicherheits-Setup.</p>
+<h3>Security</h3>
+
+<p>Defensive Setup & System Hardening.</p>
 
 </div>
 
@@ -99,12 +135,17 @@ für Unternehmen mit Anspruch.
 
 <p>© <span id="year"></span> CoreSetup Studio</p>
 
+<div>
+
 <a href="impressum.html">Impressum</a>
 <a href="datenschutz.html">Datenschutz</a>
+
+</div>
 
 </footer>
 
 <script src="assets/js/main.js"></script>
+<script src="assets/js/globe.js"></script>
 
 </body>
 </html>
